@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18% GST Calculator India - Instant Tax Computation</title>
+    <meta name="description" content="Free 18% GST calculator India. Instantly calculate 18% GST, add/remove 18% GST, CGST+SGST splits for IT services, electronics, banking. GST calculator 18%, reverse 18% GST calculator.">
+    <meta name="keywords" content="gst calculator 18%, 18% gst calculator, calculate 18% gst, 18 percent gst calculator india, remove 18% gst, gst slab 18%, 18% tax calculator">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- HTML2PDF for PDF Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A', // Finance Blue
+                        secondary: '#10B981', // Trust Green
+                        darkbg: '#0F172A',
+                        darkcard: '#1E293B'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "18% GST Calculator India",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "INR"
+        },
+        "description": "Free 18% GST calculator for India. Compute add/remove 18% GST, CGST 9% + SGST 9%, IGST 18% instantly."
+    }
+    </script>
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        .dark ::-webkit-scrollbar-track { background: #1E293B; }
+        ::-webkit-scrollbar-thumb { background: #1E3A8A; border-radius: 4px; }
+        
+        /* Hide arrows for number inputs */
+        .hide-arrows::-webkit-outer-spin-button, .hide-arrows::-webkit-inner-spin-button { 
+            -webkit-appearance: none; margin: 0; 
+        }
+        .hide-arrows { -moz-appearance: textfield; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-darkbg dark:text-gray-100 transition-colors duration-200 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-darkcard shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="calculator" class="text-primary dark:text-secondary h-8 w-8"></i>
+                    <span class="font-bold text-xl tracking-tight">GST Calc</span>
+                    <span class="text-secondary">Hub</span>
+                </div>
+                <div class="hidden md:flex space-x-8 font-medium">
+                    <!-- Links can point to sections -->
+                    <a href="#calculator" class="text-primary dark:text-secondary">Calculator</a>
+                    <a href="#about" class="hover:text-primary dark:hover:text-secondary transition">How it Works</a>
+                    <a href="#faq" class="hover:text-primary dark:hover:text-secondary transition">FAQs</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                        <i data-lucide="moon" class="h-5 w-5 dark:hidden"></i>
+                        <i data-lucide="sun" class="h-5 w-5 hidden dark:block text-yellow-400"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main App Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-primary dark:text-white mb-4">18% GST Calculator India</h1>
+            <p class="text-lg text-gray-600 dark:text-gray-400">Instantly calculate 18% GST for IT services, electronics, banking. Add/remove GST, CGST+SGST splits.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left: Calculator Inputs -->
+            <div class="lg:col-span-7 bg-white dark:bg-darkcard rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100 dark:border-gray-800">
+                <!-- Calculation Mode -->
+                <div class="flex p-1 bg-gray-100 dark:bg-gray-800 rounded-lg mb-6">
+                    <button id="modeAdd" class="flex-1 py-2 px-4 rounded-md bg-white dark:bg-darkcard shadow text-primary dark:text-white font-bold text-sm md:text-base transition-all" onclick="setMode('add')">Add GST</button>
+                    <button id="modeRemove" class="flex-1 py-2 px-4 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-900 font-semibold text-sm md:text-base transition-all" onclick="setMode('remove')">Remove GST</button>
+                </div>
+                
+                <!-- Input Amount -->
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Initial Amount</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <span class="text-gray-500 font-bold text-lg">₹</span>
+                        </div>
+                        <input type="number" id="amount" class="hide-arrows w-full pl-10 pr-4 py-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-2xl font-bold
